@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-    entry: "./src/Grid.js",
+    entry: "./src/SimpleDataGrid.js",
     output: {
-        path: "./dist/", //path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist'),
         filename: "simpleDataGrid.bundle.js",
         library: "SimpleDataGrid"
     },
@@ -33,6 +33,10 @@ module.exports = {
                         // ]
                     }
                 }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     }

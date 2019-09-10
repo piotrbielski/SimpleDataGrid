@@ -1,0 +1,45 @@
+:root {
+    --sdg-border-color: #DADADA;
+    --sdg-background-color: #F8F8F8;
+    --sdg-text-color: #808080;
+    --sdg-font-family: Arial, Helvetica, sans-serif;
+    --sdg-border-style: solid;
+    --sdg-border-size: 1px;
+}
+
+.sdg-table {
+    border-collapse: collapse;
+    font-family: var(--sdg-font-family);
+}
+
+.sdg-header {
+    color: var(--sdg-text-color);
+    background-color: var(--sdg-background-color);
+    font-size: 15px;
+}
+
+thead.sdg-header th {
+    border: var(--sdg-border-size);
+    border-color: var(--sdg-border-color);
+    border-style: var(--sdg-border-style);
+    padding: 5px 20px 5px 20px;
+    font-weight: 400;
+}
+
+.sdg-body {
+    font-size: 14px;
+}
+
+tbody.sdg-body td {
+    padding: 20px;
+}
+
+tbody.sdg-body tr {
+    border: var(--sdg-border-size);
+    border-color: var(--sdg-border-color);
+    border-style: var(--sdg-border-style);
+}
+
+tbody.sdg-body tr:hover {
+    background-color: var(--sdg-border-color);
+}
