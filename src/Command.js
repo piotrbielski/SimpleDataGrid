@@ -1,4 +1,3 @@
-
 export default class Command {
     constructor(buttonText, objectField, isHyperlink, afterExecuteCallback) {
         this.buttonText = buttonText;
