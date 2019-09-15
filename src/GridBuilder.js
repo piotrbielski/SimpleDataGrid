@@ -29,6 +29,7 @@ export default class GridBuilder {
             row.appendChild(th);
 
             th.innerText = column.title;
+            th.style.width = column.width;
         });
     }
 
@@ -52,6 +53,7 @@ export default class GridBuilder {
 
                 const element = column.getElement(dataObject);
                 cell.appendChild(element);
+                cell.style.width = column.width;
             });
         });
     }

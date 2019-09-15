@@ -6,7 +6,7 @@ export default class CommandColumn extends BaseColumn {
         super(title, width);
 
         if (!Array.isArray(commands) || !commands.every(x => x instanceof Command))
-            throw 'The \'commands\' argument must be an array and contain only Command types.';
+            throw new Error('The \'commands\' argument must be an array and contain only Command types.');
 
         this.commands = commands;
     }
