@@ -29,7 +29,9 @@ class Grid {
     createGrid(data, count) {
         const gridBuilder = new GridBuilder(this._divId);
         
-        gridBuilder.buildHeader(false, this._columns);
+        gridBuilder.buildHeader(this._columns);
+        gridBuilder.buildBody(false, this._columns, data);
+        gridBuilder.buildFooter(count, this._pageSize);
     }
 
     init(pureDataSourceAddress, additionalData) {
@@ -54,7 +56,6 @@ class Grid {
             }
 
         });
-
     }
 }
 
