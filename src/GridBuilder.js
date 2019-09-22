@@ -11,14 +11,12 @@ export default class GridBuilder {
         mainDiv.appendChild(this._table);
     }
 
-    buildHeader(rebuild, columns) {
-        if (rebuild) {
-            const headers = this._table.querySelectorAll('sdg-header');
-            headers.forEach(header => this._table.removeChild(header));
-        }
+    buildHeader(columns) {
+        const headers = this._table.querySelectorAll('sdg-head');
+        headers.forEach(header => this._table.removeChild(header));
 
         const header = document.createElement('thead');
-        header.setAttribute('class', 'sdg-header');
+        header.setAttribute('class', 'sdg-head');
         this._table.append(header);
 
         const row = document.createElement('tr');
@@ -47,7 +45,7 @@ export default class GridBuilder {
             const row = document.createElement('tr');
             body.appendChild(row);
 
-            columns.appendChild(column => {
+            columns.forEach(column => {
                 const cell = document.createElement('td');
                 row.appendChild(cell);
 
@@ -58,7 +56,66 @@ export default class GridBuilder {
         });
     }
 
-    buildFooter(rebuild) {
-        
+    buildFooter(count, pageSize, paginationCallback) {
+        const availablePageCount = Math.ceil(count / pageSize);
+        const initPage = 1;
+
+        const footers = this._table.querySelectorAll('sdg-foot');
+        footers.forEach(footer => this._table.removeChild(footer));
+
+        const footer = document.createElement('tfoot');
+        footer.setAttribute('class', 'sdg-foot');
+        this._table.appendChild(footer);
+
+        const row = document.createElement('tr');
+        footer.appendChild(row);
+
+        const td = document.createElement('td');
+        td.setAttribute('colspan', '100%');
+        row.appendChild(td); 
+
+        const pagination = document.createElement('div');
+        pagination.setAttribute('class', 'sdg-pagination');
+        td.appendChild(pagination);
+
+        const firstPage = document.createElement('a');
+        firstPage.setAttribute('data-first-page', '');
+        firstPage.innerText = '❮❮';
+        pagination.appendChild(firstPage);
+
+        const previousPage = document.createElement('a');
+        previousPage.setAttribute('data-previous-page', '');
+        previousPage.setAttribute('class', 'sdg-pagination-disabled');
+        previousPage.innerText = '❮';
+        pagination.appendChild(previousPage);
+
+        const combobox = document.createElement('select');
+        pagination.appendChild(combobox);
+        for (let i = 1; i <= availablePageCount; i++) {
+            const option = document.createElement('option');
+            option.setAttribute('value', i);
+            option.innerText = i;
+            combobox.appendChild(option);
+        }
+
+        const nextPage = document.createElement('a');
+        nextPage.setAttribute('data-next-page', '');
+        nextPage.innerText = '❯';
+        pagination.appendChild(nextPage);
+
+        const lastPage = document.createElement('a');
+        lastPage.setAttribute('data-last-page', '');
+        lastPage.innerText = '❯❯';
+        pagination.appendChild(lastPage);
+
+        this._setPaginationNavigation(initPage, availablePageCount);
+    }
+
+    _setPaginationNavigation(currentPage, availablePageCount) {
+        const firstPageNav = document.querySelector('.sdg-pagination a[data-first-page]');
+        const previousPageNav = document.querySelector('.sdg-pagination a[data-previous-page]');
+        const nextPageNav = document.querySelector('.sdg-pagination a[data-next-page]');
+        const lastPageNav = document.querySelector('.sdg-pagination a[data-last-page]');
+
     }
 }

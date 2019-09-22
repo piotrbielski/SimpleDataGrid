@@ -12,13 +12,13 @@
     font-family: var(--sdg-font-family);
 }
 
-.sdg-header {
+.sdg-head {
     color: var(--sdg-text-color);
     background-color: var(--sdg-background-color);
     font-size: 15px;
 }
 
-thead.sdg-header th {
+thead.sdg-head th {
     border: var(--sdg-border-size);
     border-color: var(--sdg-border-color);
     border-style: var(--sdg-border-style);
@@ -31,10 +31,7 @@ thead.sdg-header th {
 }
 
 tbody.sdg-body td {
-    padding: 20px;
-}
-
-tbody.sdg-body tr {
+    padding: 15px;
     border: var(--sdg-border-size);
     border-color: var(--sdg-border-color);
     border-style: var(--sdg-border-style);
@@ -42,4 +39,54 @@ tbody.sdg-body tr {
 
 tbody.sdg-body tr:hover {
     background-color: var(--sdg-border-color);
+}
+
+.sdg-foot {
+    background-color: var(--sdg-background-color);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+tfoot.sdg-foot td {
+    border: var(--sdg-border-size);
+    border-color: var(--sdg-border-color);
+    border-style: var(--sdg-border-style);
+}
+
+.sdg-pagination {
+    display: inline;
+}
+
+.sdg-pagination select {
+    float: left;
+    height: 31px;
+    width: 31px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align-last: center;
+}
+
+.sdg-pagination select::-ms-expand {
+    display: none;
+}
+
+.sdg-pagination a {
+    border: var(--sdg-border-size);
+    border-color: var(--sdg-border-color);
+    border-style: var(--sdg-border-style);
+    color: var(--sdg-text-color);
+    float: left;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+}
+
+.sdg-pagination a:hover:not(.active) {
+    background-color: var(--sdg-border-color);
+}
+
+.sdg-pagination-disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
 }
