@@ -57,9 +57,6 @@ export default class GridBuilder {
     }
 
     buildFooter(count, pageSize, paginationCallback) {
-        const availablePageCount = Math.ceil(count / pageSize);
-        const initPage = 1;
-
         const footers = this._table.querySelectorAll('sdg-foot');
         footers.forEach(footer => this._table.removeChild(footer));
 
@@ -74,18 +71,24 @@ export default class GridBuilder {
         td.setAttribute('colspan', '100%');
         row.appendChild(td); 
 
+        this._buildPagination(td, count, pageSize, paginationCallback);
+    }
+
+    _buildPagination(tdElement, count, pageSize, paginationCallback) {
+        const availablePageCount = Math.ceil(count / pageSize);
+        const initPage = 1;
+
         const pagination = document.createElement('div');
         pagination.setAttribute('class', 'sdg-pagination');
-        td.appendChild(pagination);
+        tdElement.appendChild(pagination);
 
         const firstPage = document.createElement('a');
-        firstPage.setAttribute('data-first-page', '');
+        firstPage.setAttribute('id', 'sdg-first');
         firstPage.innerText = '❮❮';
         pagination.appendChild(firstPage);
 
         const previousPage = document.createElement('a');
-        previousPage.setAttribute('data-previous-page', '');
-        previousPage.setAttribute('class', 'sdg-pagination-disabled');
+        previousPage.setAttribute('id', 'sdg-previous');
         previousPage.innerText = '❮';
         pagination.appendChild(previousPage);
 
@@ -99,23 +102,72 @@ export default class GridBuilder {
         }
 
         const nextPage = document.createElement('a');
-        nextPage.setAttribute('data-next-page', '');
+        nextPage.setAttribute('id', 'sdg-next');
         nextPage.innerText = '❯';
         pagination.appendChild(nextPage);
 
         const lastPage = document.createElement('a');
-        lastPage.setAttribute('data-last-page', '');
+        lastPage.setAttribute('id', 'sdg-last');
         lastPage.innerText = '❯❯';
         pagination.appendChild(lastPage);
 
-        this._setPaginationNavigation(initPage, availablePageCount);
+        this._setPagination(initPage, availablePageCount);
+
+        const finalPaginationCallback = (event) => {
+            const sender = event.target;
+            
+            if (sender.getAttribute('class') != null)
+                return;
+            
+            const page = sender.getAttribute('data-page');
+
+            paginationCallback(page);
+            this._setPagination(page, availablePageCount);
+        };
+
+        firstPage.addEventListener('click', (event) => finalPaginationCallback(event));
+        previousPage.addEventListener('click', (event) => finalPaginationCallback(event));
+        nextPage.addEventListener('click', (event) => finalPaginationCallback(event));
+        lastPage.addEventListener('click', (event) => finalPaginationCallback(event));
     }
 
-    _setPaginationNavigation(currentPage, availablePageCount) {
-        const firstPageNav = document.querySelector('.sdg-pagination a[data-first-page]');
-        const previousPageNav = document.querySelector('.sdg-pagination a[data-previous-page]');
-        const nextPageNav = document.querySelector('.sdg-pagination a[data-next-page]');
-        const lastPageNav = document.querySelector('.sdg-pagination a[data-last-page]');
+    _setPagination(currentPage, availablePageCount) {
+        const firstPageNav = document.getElementById('sdg-first');
+        const previousPageNav = document.getElementById('sdg-previous');
+        const nextPageNav = document.getElementById('sdg-next')
+        const lastPageNav = document.getElementById('sdg-last');
 
+        firstPageNav.removeAttribute('class');
+        previousPageNav.removeAttribute('class');
+        nextPageNav.removeAttribute('class');
+        lastPageNav.removeAttribute('class');
+
+        if (!isNaN(firstPageNav.getAttribute(this._dataFirstAttribute)) || !isNaN(lastPageNav.getAttribute(this._dataLastAttribute))) {
+            firstPageNav.setAttribute('data-page', 1);
+            lastPageNav.setAttribute('data-page', availablePageCount);
+        }
+
+        if (currentPage == 1) {
+            firstPageNav.setAttribute('class', 'sdg-pagination-disabled');
+            previousPageNav.setAttribute('class', 'sdg-pagination-disabled');
+
+            if (currentPage < availablePageCount) {
+                nextPageNav.setAttribute('data-page', currentPage + 1);
+            }
+            else {
+                nextPageNav.setAttribute('class', 'sdg-pagination-disabled');
+                lastPageNav.setAttribute('class', 'sdg-pagination-disabled');
+            }
+        }
+        else if (page < availablePageCount) {
+            previousPageNav.setAttribute('data-page', currentPage - 1);
+            nextPageNav.setAttribute('data-page', currentPage + 1);
+        }
+        else {
+            previousPageNav.setAttribute('data-page', currentPage - 1);
+
+            nextPageNav.setAttribute('class', 'sdg-pagination-disabled');
+            lastPageNav.setAttribute('class', 'sdg-pagination-disabled');
+        }
     }
 }
