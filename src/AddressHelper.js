@@ -8,6 +8,7 @@ export default class AddressHelper {
                 pureAddress += '&';
 
             pureAddress += `${prop}=${data[prop]}`;
+            first = false;
         }
 
         return pureAddress;
