@@ -93,6 +93,7 @@ export default class GridBuilder {
         pagination.appendChild(previousPage);
 
         const combobox = document.createElement('select');
+        combobox.setAttribute('id', 'sdg-combobox');
         pagination.appendChild(combobox);
         for (let i = 1; i <= availablePageCount; i++) {
             const option = document.createElement('option');
@@ -119,16 +120,20 @@ export default class GridBuilder {
             if (sender.getAttribute('class') != null)
                 return;
             
-            const page = sender.getAttribute('data-page');
+            let page = +sender.getAttribute('data-page');            
+            if (page === 0) {
+                page = +sender.value;
+            }
 
-            paginationCallback(page);
             this._setPagination(page, availablePageCount);
+            paginationCallback(page);
         };
 
         firstPage.addEventListener('click', (event) => finalPaginationCallback(event));
         previousPage.addEventListener('click', (event) => finalPaginationCallback(event));
         nextPage.addEventListener('click', (event) => finalPaginationCallback(event));
         lastPage.addEventListener('click', (event) => finalPaginationCallback(event));
+        combobox.addEventListener('change', (event) => finalPaginationCallback(event));
     }
 
     _setPagination(currentPage, availablePageCount) {
@@ -136,13 +141,16 @@ export default class GridBuilder {
         const previousPageNav = document.getElementById('sdg-previous');
         const nextPageNav = document.getElementById('sdg-next')
         const lastPageNav = document.getElementById('sdg-last');
+        const comboboxNav = document.getElementById('sdg-combobox');
 
         firstPageNav.removeAttribute('class');
         previousPageNav.removeAttribute('class');
         nextPageNav.removeAttribute('class');
         lastPageNav.removeAttribute('class');
 
-        if (!isNaN(firstPageNav.getAttribute(this._dataFirstAttribute)) || !isNaN(lastPageNav.getAttribute(this._dataLastAttribute))) {
+        comboboxNav.value = currentPage;
+
+        if (!isNaN(firstPageNav.getAttribute('data-page')) || !isNaN(lastPageNav.getAttribute('data-page'))) {
             firstPageNav.setAttribute('data-page', 1);
             lastPageNav.setAttribute('data-page', availablePageCount);
         }
@@ -159,7 +167,7 @@ export default class GridBuilder {
                 lastPageNav.setAttribute('class', 'sdg-pagination-disabled');
             }
         }
-        else if (page < availablePageCount) {
+        else if (currentPage < availablePageCount) {
             previousPageNav.setAttribute('data-page', currentPage - 1);
             nextPageNav.setAttribute('data-page', currentPage + 1);
         }
