@@ -1,8 +1,8 @@
-import Command from './Command';
-import ValueColumn from './ValueColumn';
-import CommandColumn from './CommandColumn';
-import AddressHelper from './AddressHelper';
-import GridBuilder from './GridBuilder';
+import Command from './columns/Command';
+import ValueColumn from './columns/ValueColumn';
+import CommandColumn from './columns/CommandColumn';
+import AddressHelper from './helpers/AddressHelper';
+import GridBuilder from './builders/GridBuilder';
 
 class Grid {
     constructor(divId, pageSize, columns) {
@@ -26,12 +26,12 @@ class Grid {
         return this._page * this._pageSize;
     }
 
-    createGrid(data, count) {
+    _createGrid(data, count) {
         const gridBuilder = new GridBuilder(this._divId);
         
         gridBuilder.buildHeader(this._columns);
         gridBuilder.buildBody(false, this._columns, data);
-        gridBuilder.buildFooter(count, this._pageSize);
+        gridBuilder.buildFooter(count, this._pageSize, (page) => console.log(page));
     }
 
     init(pureDataSourceAddress, additionalData) {
@@ -46,10 +46,11 @@ class Grid {
         document.addEventListener('DOMContentLoaded', async () => {            
             try {
                 const address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
+
                 const response = await fetch(address);
                 const result = await response.json();
 
-                this.createGrid(result.data, result.count);
+                this._createGrid(result.data, result.count);
             }
             catch(exception) {
                 console.error(`SimpleDataGrid exception: ${exception}`);

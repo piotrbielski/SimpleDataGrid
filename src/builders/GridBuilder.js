@@ -1,4 +1,4 @@
-import './styles/app.css';
+import '../styles/grid.css';
 
 export default class GridBuilder {
     constructor(divId) {
