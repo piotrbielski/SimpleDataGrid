@@ -1,14 +1,14 @@
+import BaseGridBuilder from './BaseGridBuilder';
 import '../styles/grid.css';
 
-export default class GridBuilder {
+export default class DefaultGridBuilder extends BaseGridBuilder {
     constructor(divId) {
-        const mainDiv = document.getElementById(divId);
-        mainDiv.innerHTML = '';
+        super(divId);
 
         this._table = document.createElement('table');
         this._table.setAttribute('class', 'sdg-table');
 
-        mainDiv.appendChild(this._table);
+        this._mainDiv.appendChild(this._table);
     }
 
     buildHeader(columns) {
@@ -32,14 +32,17 @@ export default class GridBuilder {
     }
 
     buildBody(rebuild, columns, dataObjects) {
-        if (rebuild) {
-            const bodies = this._table.querySelectorAll('sdg-body');
-            bodies.forEach(body => this._table.removeChild(body));
-        }
+        let body = null;
 
-        const body = document.createElement('tbody');
-        body.setAttribute('class', 'sdg-body');
-        this._table.appendChild(body);
+        if (rebuild) {
+            body = this._table.querySelector('.sdg-body');
+            body.innerHTML = '';
+        }
+        else {
+            body = document.createElement('tbody');
+            body.setAttribute('class', 'sdg-body');
+            this._table.appendChild(body);
+        }
 
         dataObjects.forEach(dataObject => {
             const row = document.createElement('tr');
