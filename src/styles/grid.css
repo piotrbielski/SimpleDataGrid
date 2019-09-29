@@ -10,6 +10,8 @@
 .sdg-table {
     border-collapse: collapse;
     font-family: var(--sdg-font-family);
+    table-layout: fixed;
+    width: 100%;
 }
 
 .sdg-head {

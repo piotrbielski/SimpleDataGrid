@@ -1,23 +1,26 @@
 
 export default class BaseGridBuilder {
-    constructor(divId) {
+    constructor(divId, pageSize, columns) {
         if (this.constructor == BaseGridBuilder) {
             throw new TypeError("Can not construct abstract class.");
         }
 
         this._mainDiv = document.getElementById(divId);
         this._mainDiv.innerHTML = '';
+        this._columns = columns;
+        this._pageSize = pageSize;
+        this._dataCount = 0;
     }
 
-    buildHeader(columns) {
+    buildHeader() {
         throw new Error('You have to implement the method \'buildHeader\'.');
     }
 
-    buildBody(rebuild, columns, dataObjects) {
+    buildBody(rebuild, responsePromise) {
         throw new Error('You have to implement the method \'buildBody\'.');
     }
 
-    buildFooter(count, pageSize, paginationCallback) {
+    buildFooter(paginationCallback) {
         throw new Error('You have to implement the method \'buildFooter\'.');
     }
 }

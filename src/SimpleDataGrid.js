@@ -25,7 +25,7 @@ export class Grid {
             this._gridBuilder = gridBuilder;
         }
         else {
-            this._gridBuilder = new DefaultGridBuilder(divId);
+            this._gridBuilder = new DefaultGridBuilder(divId, pageSize, columns);
         }
     }
 
@@ -37,14 +37,14 @@ export class Grid {
         return this._page * this._pageSize;
     }
 
-    _createGrid(data, count) {        
-        this._gridBuilder.buildHeader(this._columns);
-        this._gridBuilder.buildBody(false, this._columns, data);
-        this._gridBuilder.buildFooter(count, this._pageSize, async (page) => await this._loadForPage(page));
+    _createGrid(responsePromise) {        
+        this._gridBuilder.buildHeader();
+        this._gridBuilder.buildBody(false, responsePromise);
+        this._gridBuilder.buildFooter(async (page) => await this._loadForPage(page));
     }
 
-    _rebuildBodyGrid(data, count) {
-        this._gridBuilder.buildBody(true, this._columns, data);
+    _rebuildBodyGrid(responsePromise) {
+        this._gridBuilder.buildBody(true, responsePromise);
     }
 
     async _loadForPage(page) {
@@ -54,10 +54,8 @@ export class Grid {
 
         const address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
         try {
-            const response = await fetch(address);
-            const result = await response.json();
-
-            this._rebuildBodyGrid(result.data, result.count);
+            const responsePromise = fetch(address);
+            this._rebuildBodyGrid(responsePromise);
         }
         catch(exception) {
             console.error(`SimpleDataGrid exception: ${exception}`);
@@ -76,11 +74,9 @@ export class Grid {
         document.addEventListener('DOMContentLoaded', async () => {            
             try {
                 const address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
+                const responsePromise = fetch(address);
 
-                const response = await fetch(address);
-                const result = await response.json();
-
-                this._createGrid(result.data, result.count);
+                this._createGrid(responsePromise);
             }
             catch(exception) {
                 console.error(`SimpleDataGrid exception: ${exception}`);
