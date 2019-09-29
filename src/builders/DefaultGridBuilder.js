@@ -12,11 +12,7 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
 
         this._mainDiv.appendChild(this._table);
     }
-
-    get dataCount() {
-        return this._dataCount;
-    }
-
+    
     set dataCount(value) {
         if (this._dataCount !== value) {
             this._dataCount = value;
@@ -29,7 +25,7 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
     }
 
     get availablePageCount() {
-        const count = Math.ceil(this.dataCount / this._pageSize);
+        const count = Math.ceil(this._dataCount / this._pageSize);
         return count === 0 ? 1 : count;
     }
     
