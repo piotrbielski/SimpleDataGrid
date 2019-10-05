@@ -12,10 +12,10 @@ export default class CommandColumn extends BaseColumn {
     }
 
     getElement(dataObject) {
-        const span = document.createElement('span');
+        let span = document.createElement('span');
 
         this.commands.forEach(command => {
-            const button = document.createElement('button');
+            let button = document.createElement('button');
             button.innerText = command.buttonText;
 
             if (command.isHyperlink) {
@@ -25,7 +25,7 @@ export default class CommandColumn extends BaseColumn {
             }
             else {
                 button.addEventListener('click', async () => {
-                    const response = await fetch(dataObject[command.objectField]);
+                    let response = await fetch(dataObject[command.objectField]);
 
                     if (response != null)
                         command.afterExecuteCallback(response);

@@ -52,9 +52,9 @@ export class Grid {
         this._urlData.startRange = this.startRange;
         this._urlData.endRange = this.endRange;
 
-        const address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
+        let address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
         try {
-            const responsePromise = fetch(address);
+            let responsePromise = fetch(address);
             this._rebuildBodyGrid(responsePromise);
         }
         catch(exception) {
@@ -66,15 +66,15 @@ export class Grid {
         this._pureDataSourceAddress = pureDataSourceAddress;
 
         if (additionalData != null && additionalData != undefined) {
-            for (const prop in additionalData) {
+            for (let prop in additionalData) {
                 this._urlData[prop] = additionalData[prop];
             }
         }
 
         document.addEventListener('DOMContentLoaded', async () => {            
             try {
-                const address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
-                const responsePromise = fetch(address);
+                let address = AddressHelper.AddDataToAddress(this._pureDataSourceAddress, this._urlData);
+                let responsePromise = fetch(address);
 
                 this._createGrid(responsePromise);
             }

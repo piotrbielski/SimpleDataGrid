@@ -8,7 +8,7 @@ export default class ValueColumn extends BaseColumn {
     }
 
     getElement(dataObject) {
-        const span = document.createElement('span');
+        let span = document.createElement('span');
         span.innerText = dataObject[this.objectField];
 
         return span;

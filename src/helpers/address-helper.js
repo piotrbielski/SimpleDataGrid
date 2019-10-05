@@ -3,7 +3,7 @@ export default class AddressHelper {
         pureAddress += "?";
 
         let first = true;
-        for (const prop in data) {
+        for (let prop in data) {
             if (!first)
                 pureAddress += '&';
 

@@ -16,31 +16,31 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         if (this._dataCount !== value) {
             this._dataCount = value;
 
-            const comboboxNav = document.querySelector(`div#${this._mainDiv.id} select[data-element="combobox"]`);//document.getElementById('sdg-combobox');
-            const currentPage = +comboboxNav.value;
+            let comboboxNav = document.querySelector(`div#${this._mainDiv.id} select[data-element="combobox"]`);//document.getElementById('sdg-combobox');
+            let currentPage = +comboboxNav.value;
 
             this._refreshPagination(currentPage, true);
         }
     }
 
     get availablePageCount() {
-        const count = Math.ceil(this._dataCount / this._pageSize);
+        let count = Math.ceil(this._dataCount / this._pageSize);
         return count === 0 ? 1 : count;
     }
     
     buildHeader() {
-        const headers = this._table.querySelectorAll('.sdg-head');
+        let headers = this._table.querySelectorAll('.sdg-head');
         headers.forEach(header => this._table.removeChild(header));
 
-        const header = document.createElement('thead');
+        let header = document.createElement('thead');
         header.setAttribute('class', 'sdg-head');
         this._table.append(header);
 
-        const row = document.createElement('tr');
+        let row = document.createElement('tr');
         header.appendChild(row);
 
         this._columns.forEach(column => {
-            const th = document.createElement('th');
+            let th = document.createElement('th');
             row.appendChild(th);
 
             th.innerText = column.title;
@@ -63,20 +63,20 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
             this._table.appendChild(body);
         }
 
-        const dataLoader = new DefaultDataLoader(body);
-        const gridData = await dataLoader.loadData(responsePromise);
-        const dataObjects = gridData.data;
+        let dataLoader = new DefaultDataLoader(body);
+        let gridData = await dataLoader.loadData(responsePromise);
+        let dataObjects = gridData.data;
         this.dataCount = gridData.count;
 
         dataObjects.forEach(dataObject => {
-            const row = document.createElement('tr');
+            let row = document.createElement('tr');
             body.appendChild(row);
 
             this._columns.forEach(column => {
-                const cell = document.createElement('td');
+                let cell = document.createElement('td');
                 row.appendChild(cell);
 
-                const element = column.getElement(dataObject);
+                let element = column.getElement(dataObject);
                 cell.appendChild(element);
                 cell.style.width = column.width;
             });
@@ -84,17 +84,17 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
     }
 
     buildFooter(paginationCallback) {
-        const footers = this._table.querySelectorAll('.sdg-foot');
+        let footers = this._table.querySelectorAll('.sdg-foot');
         footers.forEach(footer => this._table.removeChild(footer));
 
-        const footer = document.createElement('tfoot');
+        let footer = document.createElement('tfoot');
         footer.setAttribute('class', 'sdg-foot');
         this._table.appendChild(footer);
 
-        const row = document.createElement('tr');
+        let row = document.createElement('tr');
         footer.appendChild(row);
 
-        const td = document.createElement('td');
+        let td = document.createElement('td');
         td.setAttribute('colspan', '100%');
         row.appendChild(td); 
 
@@ -102,46 +102,46 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
     }
 
     _buildPagination(tdElement, paginationCallback) {
-        const initPage = 1;
+        let initPage = 1;
 
-        const pagination = document.createElement('div');
+        let pagination = document.createElement('div');
         pagination.setAttribute('class', 'sdg-pagination');
         tdElement.appendChild(pagination);
 
-        const firstPage = document.createElement('a');
+        let firstPage = document.createElement('a');
         firstPage.setAttribute('data-element', 'first');
         firstPage.innerText = '❮❮';
         pagination.appendChild(firstPage);
 
-        const previousPage = document.createElement('a');
+        let previousPage = document.createElement('a');
         previousPage.setAttribute('data-element', 'previous');
         previousPage.innerText = '❮';
         pagination.appendChild(previousPage);
 
-        const combobox = document.createElement('select');
+        let combobox = document.createElement('select');
         combobox.setAttribute('data-element', 'combobox');
         pagination.appendChild(combobox);
         for (let i = 1; i <= this.availablePageCount; i++) {
-            const option = document.createElement('option');
+            let option = document.createElement('option');
             option.setAttribute('value', i);
             option.innerText = i;
             combobox.appendChild(option);
         }
 
-        const nextPage = document.createElement('a');
+        let nextPage = document.createElement('a');
         nextPage.setAttribute('data-element', 'next');
         nextPage.innerText = '❯';
         pagination.appendChild(nextPage);
 
-        const lastPage = document.createElement('a');
+        let lastPage = document.createElement('a');
         lastPage.setAttribute('data-element', 'last');
         lastPage.innerText = '❯❯';
         pagination.appendChild(lastPage);
 
         this._refreshPagination(initPage, false);
 
-        const finalPaginationCallback = (event) => {
-            const sender = event.target;
+        let finalPaginationCallback = (event) => {
+            let sender = event.target;
             
             if (sender.getAttribute('class') != null)
                 return;
@@ -163,11 +163,11 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
     }
 
     _refreshPagination(currentPage, changedDataCount) {
-        const firstPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="first"]`);
-        const previousPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="previous"]`);
-        const nextPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="next"]`);
-        const lastPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="last"]`);
-        const comboboxNav = document.querySelector(`div#${this._mainDiv.id} select[data-element="combobox"]`);
+        let firstPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="first"]`);
+        let previousPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="previous"]`);
+        let nextPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="next"]`);
+        let lastPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="last"]`);
+        let comboboxNav = document.querySelector(`div#${this._mainDiv.id} select[data-element="combobox"]`);
 
         firstPageNav.removeAttribute('class');
         previousPageNav.removeAttribute('class');
@@ -177,7 +177,7 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         if (changedDataCount) {
             comboboxNav.innerHTML = '';
             for (let i = 1; i <= this.availablePageCount; i++) {
-                const option = document.createElement('option');
+                let option = document.createElement('option');
                 option.setAttribute('value', i);
                 option.innerText = i;
                 comboboxNav.appendChild(option);

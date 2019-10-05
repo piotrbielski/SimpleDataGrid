@@ -7,25 +7,25 @@ export default class DefaultDataLoader extends BaseDataLoader {
     }
 
     _addLoader() {
-        const dotCount = 8;
+        let dotCount = 8;
 
-        const loaderRow = document.createElement('tr');
+        let loaderRow = document.createElement('tr');
         loaderRow.setAttribute('data-element', 'loader');
 
-        const loaderCell = document.createElement('td');
+        let loaderCell = document.createElement('td');
         loaderCell.setAttribute('colspan', '100%');
         loaderRow.appendChild(loaderCell);
 
-        const loaderDiv = document.createElement('div');
+        let loaderDiv = document.createElement('div');
         loaderDiv.setAttribute('class', 'sdg-loader-div');
         loaderCell.appendChild(loaderDiv);
 
-        const loader = document.createElement('div');
+        let loader = document.createElement('div');
         loader.setAttribute('class', 'sdg-loader');
         loaderDiv.append(loader);
 
         for (let i = 0; i < dotCount; i++) {
-            const dot = document.createElement('div');
+            let dot = document.createElement('div');
             loader.appendChild(dot);
         }
 
@@ -33,15 +33,15 @@ export default class DefaultDataLoader extends BaseDataLoader {
     }
 
     _removeLoader() {
-        const loaderRow = this._elementToLoad.querySelector('tr[data-element="loader"]');
+        let loaderRow = this._elementToLoad.querySelector('tr[data-element="loader"]');
         this._elementToLoad.removeChild(loaderRow);
     }
 
     async loadData(responsePromise) {
         this._addLoader();
 
-        const awaitedResponse = await responsePromise;
-        const json = await awaitedResponse.json();
+        let awaitedResponse = await responsePromise;
+        let json = await awaitedResponse.json();
 
         this._removeLoader();
 
