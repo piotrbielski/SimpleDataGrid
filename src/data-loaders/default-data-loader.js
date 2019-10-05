@@ -1,4 +1,4 @@
-import BaseDataLoader from './BaseDataLoader';
+import BaseDataLoader from './base-data-loader';
 import '../styles/loader.css';
 
 export default class DefaultDataLoader extends BaseDataLoader {

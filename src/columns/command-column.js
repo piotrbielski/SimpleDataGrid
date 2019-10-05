@@ -1,5 +1,5 @@
-import BaseColumn from './BaseColumn';
-import Command from './Command';
+import BaseColumn from './base-column';
+import Command from './command';
 
 export default class CommandColumn extends BaseColumn {
     constructor(title, width, commands) {

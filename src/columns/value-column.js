@@ -1,4 +1,4 @@
-import BaseColumn from './BaseColumn';
+import BaseColumn from './base-column';
 
 export default class ValueColumn extends BaseColumn {
     constructor(title, objectField, width) {

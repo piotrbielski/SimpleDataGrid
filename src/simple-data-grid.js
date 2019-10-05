@@ -1,9 +1,9 @@
-import Command from './columns/Command';
-import ValueColumn from './columns/ValueColumn';
-import CommandColumn from './columns/CommandColumn';
-import AddressHelper from './helpers/AddressHelper';
-import BaseGridBuilder from './builders/BaseGridBuilder';
-import DefaultGridBuilder from './builders/DefaultGridBuilder';
+import Command from './columns/command';
+import ValueColumn from './columns/value-column';
+import CommandColumn from './columns/command-column';
+import AddressHelper from './helpers/address-helper';
+import BaseGridBuilder from './builders/base-grid-builder';
+import DefaultGridBuilder from './builders/default-grid-builder';
 
 export class Grid {
     constructor(divId, pageSize, columns, gridBuilder) {

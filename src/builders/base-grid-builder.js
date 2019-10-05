@@ -1,4 +1,3 @@
-
 export default class BaseGridBuilder {
     constructor(divId, pageSize, columns) {
         if (this.constructor == BaseGridBuilder) {

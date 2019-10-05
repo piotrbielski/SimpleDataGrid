@@ -1,5 +1,5 @@
-import BaseGridBuilder from './BaseGridBuilder';
-import DefaultDataLoader from '../dataLoaders/DefaultDataLoader';
+import BaseGridBuilder from './base-grid-builder';
+import DefaultDataLoader from '../data-loaders/default-data-loader';
 import '../styles/grid.css';
 
 export default class DefaultGridBuilder extends BaseGridBuilder {

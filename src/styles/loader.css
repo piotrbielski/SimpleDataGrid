@@ -4,12 +4,6 @@
     --sdg-border-size: 1px;
 }
 
-.sdg-loader-row {
-    border: var(--sdg-border-size);
-    border-color: var(--sdg-border-color);
-    border-style: var(--sdg-border-style);
-}
-
 .sdg-loader-div {
     position: relative;
     height: 136px;

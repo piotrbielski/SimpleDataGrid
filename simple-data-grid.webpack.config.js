@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: "./src/SimpleDataGrid.js",
+    entry: "./src/simple-data-grid.js",
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: "simpleDataGrid.bundle.js",
+        filename: "simple-data-grid.bundle.js",
         library: "SimpleDataGrid"
     },
     watch: true,
