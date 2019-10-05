@@ -7,17 +7,16 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         super(divId, pageSize, columns);
 
         this._table = document.createElement('table');
-        this._table.setAttribute('id', 'sdg-table');
         this._table.setAttribute('class', 'sdg-table');
 
         this._mainDiv.appendChild(this._table);
     }
-    
+
     set dataCount(value) {
         if (this._dataCount !== value) {
             this._dataCount = value;
 
-            const comboboxNav = document.getElementById('sdg-combobox');
+            const comboboxNav = document.querySelector(`div#${this._mainDiv.id} select[data-element="combobox"]`);//document.getElementById('sdg-combobox');
             const currentPage = +comboboxNav.value;
 
             this._refreshPagination(currentPage, true);
@@ -34,7 +33,6 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         headers.forEach(header => this._table.removeChild(header));
 
         const header = document.createElement('thead');
-        header.setAttribute('id', 'sdg-head');
         header.setAttribute('class', 'sdg-head');
         this._table.append(header);
 
@@ -61,12 +59,11 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         }
         else {
             body = document.createElement('tbody');
-            body.setAttribute('id', 'sdg-body');
             body.setAttribute('class', 'sdg-body');
             this._table.appendChild(body);
         }
 
-        const dataLoader = new DefaultDataLoader('sdg-body');
+        const dataLoader = new DefaultDataLoader(body);
         const gridData = await dataLoader.loadData(responsePromise);
         const dataObjects = gridData.data;
         this.dataCount = gridData.count;
@@ -91,7 +88,6 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         footers.forEach(footer => this._table.removeChild(footer));
 
         const footer = document.createElement('tfoot');
-        footer.setAttribute('id', 'sdg-foot');
         footer.setAttribute('class', 'sdg-foot');
         this._table.appendChild(footer);
 
@@ -113,17 +109,17 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         tdElement.appendChild(pagination);
 
         const firstPage = document.createElement('a');
-        firstPage.setAttribute('id', 'sdg-first');
+        firstPage.setAttribute('data-element', 'first');
         firstPage.innerText = '❮❮';
         pagination.appendChild(firstPage);
 
         const previousPage = document.createElement('a');
-        previousPage.setAttribute('id', 'sdg-previous');
+        previousPage.setAttribute('data-element', 'previous');
         previousPage.innerText = '❮';
         pagination.appendChild(previousPage);
 
         const combobox = document.createElement('select');
-        combobox.setAttribute('id', 'sdg-combobox');
+        combobox.setAttribute('data-element', 'combobox');
         pagination.appendChild(combobox);
         for (let i = 1; i <= this.availablePageCount; i++) {
             const option = document.createElement('option');
@@ -133,12 +129,12 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
         }
 
         const nextPage = document.createElement('a');
-        nextPage.setAttribute('id', 'sdg-next');
+        nextPage.setAttribute('data-element', 'next');
         nextPage.innerText = '❯';
         pagination.appendChild(nextPage);
 
         const lastPage = document.createElement('a');
-        lastPage.setAttribute('id', 'sdg-last');
+        lastPage.setAttribute('data-element', 'last');
         lastPage.innerText = '❯❯';
         pagination.appendChild(lastPage);
 
@@ -167,11 +163,11 @@ export default class DefaultGridBuilder extends BaseGridBuilder {
     }
 
     _refreshPagination(currentPage, changedDataCount) {
-        const firstPageNav = document.getElementById('sdg-first');
-        const previousPageNav = document.getElementById('sdg-previous');
-        const nextPageNav = document.getElementById('sdg-next')
-        const lastPageNav = document.getElementById('sdg-last');
-        const comboboxNav = document.getElementById('sdg-combobox');
+        const firstPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="first"]`);
+        const previousPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="previous"]`);
+        const nextPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="next"]`);
+        const lastPageNav = document.querySelector(`div#${this._mainDiv.id} a[data-element="last"]`);
+        const comboboxNav = document.querySelector(`div#${this._mainDiv.id} select[data-element="combobox"]`);
 
         firstPageNav.removeAttribute('class');
         previousPageNav.removeAttribute('class');

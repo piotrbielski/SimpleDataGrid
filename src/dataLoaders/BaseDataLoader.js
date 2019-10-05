@@ -1,10 +1,10 @@
 export default class BaseDataLoader {
-    constructor(elementIdToLoad) {
+    constructor(elementToLoad) {
         if (this.constructor == BaseDataLoader) {
             throw new TypeError("Can not construct abstract class.");
         }
 
-        this._elementToLoad = document.getElementById(elementIdToLoad);
+        this._elementToLoad = elementToLoad;
     }
 
     loadData(responsePromise) {

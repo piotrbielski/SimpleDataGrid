@@ -2,18 +2,15 @@ import BaseDataLoader from './BaseDataLoader';
 import '../styles/loader.css';
 
 export default class DefaultDataLoader extends BaseDataLoader {
-    constructor(elementIdToLoad) {
-        super(elementIdToLoad);
-
-        this._loaderId = 'sdg-loader-row';
+    constructor(elementToLoad) {
+        super(elementToLoad);
     }
 
     _addLoader() {
         const dotCount = 8;
 
         const loaderRow = document.createElement('tr');
-        loaderRow.setAttribute('id', 'sdg-loader-row');
-        loaderRow.setAttribute('class', 'sdg-loader-row');
+        loaderRow.setAttribute('data-element', 'loader');
 
         const loaderCell = document.createElement('td');
         loaderCell.setAttribute('colspan', '100%');
@@ -36,7 +33,7 @@ export default class DefaultDataLoader extends BaseDataLoader {
     }
 
     _removeLoader() {
-        const loaderRow = document.getElementById(this._loaderId);
+        const loaderRow = this._elementToLoad.querySelector('tr[data-element="loader"]');
         this._elementToLoad.removeChild(loaderRow);
     }
 
