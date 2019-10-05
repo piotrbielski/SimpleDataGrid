@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# dist
+simple-data-grid.bundle.js
+simple-data-grid.bundle.js.map
