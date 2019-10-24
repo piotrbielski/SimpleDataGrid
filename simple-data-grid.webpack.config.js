@@ -4,7 +4,7 @@ module.exports = {
     entry: "./src/simple-data-grid.js",
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: "simple-data-grid.bundle.js",
+        filename: "simple-data-grid.dev.bundle.js",
         library: "SimpleDataGrid"
     },
     watch: true,
